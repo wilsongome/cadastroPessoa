@@ -25,27 +25,30 @@
         </tr>
     </thead>
     <tbody>
+        @foreach ($pessoas as $pessoa)
         <tr>
-            <td>1</td>
-            <td>203.919.618.88</td>
-            <td>Wilson Gomes</td>
-            <td>wilsongome@gmail.com</td>
-            <td>06/05/1977</td>
-            <td>Masculino</td>
+            <td>{{$pessoa->id}}</td>
+            <td>{{$pessoa->cpf}}</td>
+            <td>{{$pessoa->nome}} {{$pessoa->sobrenome}}</td>
+            <td>{{$pessoa->email}}</td>
+            <td>{{Carbon::parse($pessoa->data_nascimento)->format('d/m/Y');}}</td>
+            <td>{{$pessoa->genero}}</td>
             <td>
-                <a href="/pessoa/1/edit">
+                <a href="/pessoa/{{$pessoa->id}}/edit">
                     <i class="fas fa-edit fa-lg" style="color: green"></i>
                 </a>
             </td>
             <td>
-                <form method="post" action="/pessoa/1"> 
+                <form method="post" action="/pessoa/{{$pessoa->id}}"> 
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn-delete"><i class="fas fa-trash-alt" style="color: red"></i></button>
                 </form>
             </td>
         </tr>
+        @endforeach
     </tbody>
 </table>
+        
 
 @stop

@@ -10,4 +10,5 @@ class Pessoa extends Model
     use HasFactory;
     protected $fillable = ['cpf','nome', 'sobrenome', 'data_nascimento', 'email','genero'];
     public $timestamps = false;
+    
 }

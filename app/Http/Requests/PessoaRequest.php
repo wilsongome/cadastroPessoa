@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Cpf;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 
@@ -15,6 +16,7 @@ class PessoaRequest extends FormRequest
         return true;
     }
 
+
     public function messages(): array
     {
         return [
@@ -24,16 +26,11 @@ class PessoaRequest extends FormRequest
                 'max'    => 'O campo :attribute deve ter no máximo :max caracteres.',
                 'alpha'    => 'O campo :attribute deve ser texto.',
                 'date'    => 'O campo :attribute é inválido.',
-                'regex'    => 'O campo :attribute é inválido.'
+                'regex'    => 'O campo :attribute é inválido.',
+                'before_or_equal' => "O campo :attribute não pode estar no futuro."
         ];
     }
 
-    public function after(): array
-    {
-        return [
-            
-        ];
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -43,11 +40,11 @@ class PessoaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => 'required|unique:pessoas|max:255',
-            'nome' => 'required|max:15|regex:/^[A-Za-z]+$/',
-            'sobrenome' => 'required|alpha|max:50',
+            'cpf' => ['required','unique:pessoas,cpf,'. $this->route('id'),'max:255', new Cpf()],
+            'nome' => 'required|max:15|regex:/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\']+$/',
+            'sobrenome' => 'required|regex:/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\'\s]+$/|max:50',
             'email' => 'required|email|max:50',
-            'data_nascimento' => 'required|date',
+            'data_nascimento' => 'required|date_format:d/m/Y|before_or_equal:today',
             'genero' => 'required|alpha|max:10',
         ];
     }

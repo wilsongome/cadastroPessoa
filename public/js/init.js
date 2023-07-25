@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     $('.btn-delete').click(function(event){
-        if(!confirm("Do you want to remove it?")){
+        if(!confirm("Deseja remover?")){
             event.preventDefault();
         }
     });

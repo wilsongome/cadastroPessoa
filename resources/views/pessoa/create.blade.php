@@ -10,9 +10,12 @@
         @endforeach
     @endif 
 @endif
+@if(session('exception'))
+    <x-layout.alert status="Erro" message="{{session('exception')}}" class="danger" />
+@endif
 
 <form method="post" action="{{ route('pessoa.store') }}">
-    <x-form.btn_save />
+    <x-form.btn_save route="{{ route('pessoa.create') }}" label="Inserir" />
     @csrf
     <div class="row">
         <div class="col-sm-4">
