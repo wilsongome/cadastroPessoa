@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class PessoaRequest extends FormRequest
 {
@@ -11,18 +12,28 @@ class PessoaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
-   /*  public function messages(): array
+    public function messages(): array
     {
         return [
-            'cpf' => 'CPF inválido!',
-            'data_nascimento' => 'Data de nascimento inválida!',
-            'email' => 'E-mail inválido!',
-            'genero' => 'Gênero inválido!'
+                'required'    => 'O campo :attribute é obrigatório.',
+                'unique'    => 'O :attribute informado já existe no sistema.',
+                'email'    => 'O campo :attribute é inválido.',
+                'max'    => 'O campo :attribute deve ter no máximo :max caracteres.',
+                'alpha'    => 'O campo :attribute deve ser texto.',
+                'date'    => 'O campo :attribute é inválido.',
+                'regex'    => 'O campo :attribute é inválido.'
         ];
-    } */
+    }
+
+    public function after(): array
+    {
+        return [
+            
+        ];
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -32,12 +43,12 @@ class PessoaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'cpf' => 'required|unique:cpf|max:255',
-            'nome' => 'required|max:255',
-            'sobrenome' => 'required|max:255',
+            'cpf' => 'required|unique:pessoas|max:255',
+            'nome' => 'required|max:15|regex:/^[A-Za-z]+$/',
+            'sobrenome' => 'required|alpha|max:50',
+            'email' => 'required|email|max:50',
             'data_nascimento' => 'required|date',
-            'email' => 'required|max:255',
-            'genero' => 'required|max:255'
+            'genero' => 'required|alpha|max:10',
         ];
     }
 }

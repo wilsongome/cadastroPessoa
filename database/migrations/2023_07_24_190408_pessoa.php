@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->id();
-            $table->string('cpf', 11)->unique();
+            $table->string('cpf', 14)->unique();
             $table->string('nome', 255);
             $table->string('sobrenome', 255);
             $table->date('data_nascimento');
