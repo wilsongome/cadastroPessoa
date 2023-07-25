@@ -2,8 +2,8 @@
  
 @section('content')
 
-@if(session('error'))
-<x-layout.alert status="Error" message="{{session('error')}}" class="danger" />
+@if(session('exception'))
+<x-layout.alert status="Error" message="{{session('exception')}}" class="danger" />
 @endif
 @if(session('success'))
 <x-layout.alert status="Success" message="{{session('success')}}" class="success" />

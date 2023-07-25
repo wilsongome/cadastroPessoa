@@ -20,4 +20,4 @@ use Illuminate\Support\Facades\Route;
 }); */
 
 
-Route::post('/pessoa', [PessoaController::class, 'store'])->name('pessoa.store');
+Route::post('/cadastro', [PessoaController::class, 'storeApi']);

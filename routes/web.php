@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function(){
+/* Route::get('/', function(){
    return redirect()->route('pessoa.index');
-});
+}); */
 
 Route::get('/pessoa', [PessoaController::class, 'index'])->name('pessoa.index');
 Route::post('/pessoa', [PessoaController::class, 'store'])->name('pessoa.store');
@@ -24,3 +24,4 @@ Route::get('/pessoa/create', [PessoaController::class, 'create'])->name('pessoa.
 Route::get('/pessoa/{id}/edit', [PessoaController::class, 'edit'])->name('pessoa.edit');
 Route::put('/pessoa/{id}', [PessoaController::class, 'update'])->name('pessoa.update');
 Route::delete('/pessoa/{id}', [PessoaController::class, 'delete'])->name('pessoa.delete');
+

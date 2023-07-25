@@ -3,10 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Rules\Cpf;
+use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Validator;
 
-class PessoaRequest extends FormRequest
+class PessoaRequestApi extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -48,5 +50,12 @@ class PessoaRequest extends FormRequest
             'data_nascimento' => 'required|date_format:d/m/Y|before_or_equal:today',
             'genero' => 'required|alpha|max:10',
         ];
+    }
+
+    protected function failedValidation(ValidationValidator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors()
+            ], 400));
     }
 }
