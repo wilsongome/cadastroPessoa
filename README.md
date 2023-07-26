@@ -16,14 +16,17 @@ Essa é uma aplicação simples para cadastro de pessoas. Ela contém um CRUD co
 **POST**
 http://localhost/api/cadastro<br />
 Recebe um Json como parâmetro no corpo da requisição:
-```{
+```
+{
     "cpf": "xxx.xxx.xxx-xx",
     "email": "exemplo@gmail.com", 
     "data_nascimento": "06/05/1980",
     "nome": "Paulo", 
     "sobrenome": "Barbosa",
     "genero": "Masculino"
-}```<br />
+}
+```
+<br />
 
 Retorna 201, e um JSON em caso de sucesso.<br />
 
