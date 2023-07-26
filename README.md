@@ -11,6 +11,9 @@
 
 Essa é uma aplicação simples para cadastro de pessoas. Ela contém um CRUD completo, e também implementa uma API para realização do cadastro.
 
+## Tecnologias utilizada
+PHP 8.1, Larvel 10, MySQL 8.0, Bootstrap 5, JQuery 3.7
+
 ### API
 
 **POST**
