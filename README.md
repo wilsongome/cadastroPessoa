@@ -28,7 +28,7 @@ Recebe um Json como parâmetro no corpo da requisição:
 ```
 <br />
 
-Retorna 201, e um JSON em caso de sucesso.<br />
+Retorna 201 e ,em caso de sucesso, um JSON idêntico ao acima acrescentando o ID gerado.<br />
 
 Em caso de falha, vai retornar o código de erro e um JSON contendo a mensagem de erro
 
