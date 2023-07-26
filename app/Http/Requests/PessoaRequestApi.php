@@ -30,7 +30,8 @@ class PessoaRequestApi extends FormRequest
                 'date'    => 'O campo :attribute é inválido.',
                 'regex'    => 'O campo :attribute é inválido.',
                 'before_or_equal' => "O campo :attribute não pode estar no futuro.",
-                'date_format' => "O campo :attribute é inválido."
+                'date_format' => "O campo :attribute é inválido.",
+                'in' => "O campo :attribute deve ser (Masculino, Feminino ou Outros)"
         ];
     }
 
@@ -48,7 +49,8 @@ class PessoaRequestApi extends FormRequest
             'sobrenome' => 'required|regex:/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\'\s]+$/|max:50',
             'email' => 'required|email|max:50',
             'data_nascimento' => 'required|date_format:d/m/Y|before_or_equal:today',
-            'genero' => 'required|alpha|max:10',
+            'genero' => 'required|alpha|max:10|in:Masculino,Feminino,Outros'
+            
         ];
     }
 

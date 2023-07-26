@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::get('/', function(){
+Route::get('/', function(){
    return redirect()->route('pessoa.index');
-}); */
+}); 
 
 Route::get('/pessoa', [PessoaController::class, 'index'])->name('pessoa.index');
 Route::post('/pessoa', [PessoaController::class, 'store'])->name('pessoa.store');

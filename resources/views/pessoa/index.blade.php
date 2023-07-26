@@ -49,6 +49,7 @@
         @endforeach
     </tbody>
 </table>
-        
+
+{{ $pessoas->links() }}
 
 @stop

@@ -3,7 +3,7 @@
     <div class="col-sm-2">
         <a href="{{$route}}">
         <button type="button" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus"></i> New
+            <i class="fas fa-plus"></i> Novo registro
         </button>
         </a>
     </div>

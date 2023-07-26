@@ -13,11 +13,50 @@ class Cpf{
         }
     }
 
+    private function sequenciaInvalida(string $cpfLimpo): bool
+    {
+        $lista_invalidos = [
+            '11111111111',
+            '22222222222',
+            '33333333333',
+            '44444444444',
+            '55555555555',
+            '66666666666',
+            '77777777777',
+            '88888888888',
+            '99999999999',
+        ];
+
+        return in_array($cpfLimpo, $lista_invalidos);
+    }
+
+    private function estruturaInvalida(string $cpf):bool
+    {
+        $cpf_partes = explode(".", $cpf);
+        if( count($cpf_partes) != 3 ){
+            return true;
+        }
+
+        $cpf_partes = explode('-', $cpf_partes[2]);
+        if(strlen($cpf_partes[1]) < 2){
+            return true;
+        }
+        return false;
+    }
+
     private function validar()
     {
+        if($this->estruturaInvalida($this->cpf)){
+            return false;
+        }
+
         $cpf = preg_replace('/\D/', '', $this->cpf);
 
         if(strlen($cpf) != 11){
+            return false;
+        }
+
+        if($this->sequenciaInvalida($cpf)){
             return false;
         }
         

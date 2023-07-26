@@ -17,11 +17,11 @@ class PessoaController extends Controller
     {
         try{
 
-            $pessoas = Pessoa::all();
+            $pessoas = Pessoa::paginate(10);
             return view('pessoa.index', ['pessoas' => $pessoas]);
         
         }catch(Exception $e){
-            return redirect()->route('pessoa.index')->with('exception','Exceção: Erro ao listar os cadastros!');
+            return redirect()->route('pessoa.index', [], 500)->with('exception','Exceção: Erro ao listar os cadastros!');
         }
         
     }
@@ -29,8 +29,10 @@ class PessoaController extends Controller
     private function persist(array $parameters): Pessoa|array
     {
         try {
-
-            $parameters['data_nascimento'] = Carbon::createFromFormat('d/m/Y',$parameters['data_nascimento'])->format('Y-m-d');
+            $parameters['email']            = strtolower($parameters['email']);
+            $parameters['nome']             = ucfirst($parameters['nome']);
+            $parameters['genero']           = ucfirst($parameters['genero']);
+            $parameters['data_nascimento']  = Carbon::createFromFormat('d/m/Y',$parameters['data_nascimento'])->format('Y-m-d');
             $pessoa = Pessoa::create($parameters);
             return $pessoa;
         
@@ -54,7 +56,7 @@ class PessoaController extends Controller
             return redirect()->route('pessoa.edit', ['id' => $pessoa->id])->with('success','Cadastro realizado!');
         
         } catch (Exception $e) {
-            return redirect()->route('pessoa.create')->with('exception','Exceção: Dados inválidos!');
+            return redirect()->route('pessoa.create', [], 500)->with('exception','Exceção: Dados inválidos!');
         }
     }
 
@@ -71,16 +73,16 @@ class PessoaController extends Controller
 
             $validated['data_nascimento'] = Carbon::createFromFormat('d/m/Y',$validated['data_nascimento'])->format('Y-m-d');
             $pessoa->cpf = $validated['cpf'];
-            $pessoa->nome = $validated['nome'];
+            $pessoa->nome = ucfirst($validated['nome']);
             $pessoa->sobrenome = $validated['sobrenome'];
             $pessoa->data_nascimento = $validated['data_nascimento'];
-            $pessoa->email = $validated['email'];
-            $pessoa->genero = $validated['genero'];
+            $pessoa->email = strtolower($validated['email']);
+            $pessoa->genero = ucfirst($validated['genero']);
             $pessoa->save();
             return redirect()->route('pessoa.edit', ['id' => $pessoa->id])->with('success','Dados alterados!');
         
         } catch (Exception $e) {
-            return redirect()->route('pessoa.edit', ['id' => $pessoa->id])->with('exception',"Exceção: Verifique os dados!");
+            return redirect()->route('pessoa.edit', ['id' => $pessoa->id], 500)->with('exception',"Exceção: Verifique os dados!");
         }
     }
 
@@ -95,14 +97,14 @@ class PessoaController extends Controller
 
            $pessoa = Pessoa::find($request->route('id'));
            if(!$pessoa){
-            return redirect()->route('pessoa.index')->with('exception','Exceção: Pessoa não encontrada!');
+            return redirect()->route('pessoa.index')->with('exception','Exceção: Pessoa não existe!');
            }
 
            $pessoa->data_nascimento = Carbon::parse($pessoa->data_nascimento)->format('d/m/Y');
            return view('pessoa.edit', ['pessoa' => $pessoa]);
 
         } catch (Exception $e) {
-            return redirect()->route('pessoa.index')->with('exception','Exceção: Dados inválidos!');
+            return redirect()->route('pessoa.index', [], 500)->with('exception','Exceção: Dados inválidos!');
         }
     }
 
@@ -111,11 +113,14 @@ class PessoaController extends Controller
         try {
 
             $pessoa = Pessoa::find($request->route('id'));
+            if(!$pessoa){
+                return redirect()->route('pessoa.index')->with('exception','Exceção: Pessoa não existe!');
+            }
             $pessoa->delete();
             return redirect()->route('pessoa.index')->with('success','Pessoa removida!');
 
          } catch (Exception $e) {
-             return redirect()->route('pessoa.index')->with('exception','Exceção: Pessoa não encontrada!');
+             return redirect()->route('pessoa.index', [], 500)->with('exception','Exceção: Pessoa não existe!');
          }
     }
 
